@@ -6,8 +6,10 @@ function scrapePage(arg, callback) {
             var $ = cheerio.load(body);
             var hyperLinks = $('a');
             for(var i=0; i<hyperLinks.length;i++){
-                console.log(items);
+                
                 if($(hyperLinks[i]).attr('href')){
+                    //console.log($(hyperLinks[i]).attr('href'));
+                    if($(hyperLinks[i]).attr('href')!='#content')
                     items.push($(hyperLinks[i]).attr('href'));
                 }
             }
@@ -17,7 +19,7 @@ function scrapePage(arg, callback) {
             }, 1000);
         }
     });
-   
+    // console.log('do something with \''+arg+'\', return 1 sec later');
 }
 function final() { console.log('Done', results); }
 
@@ -27,8 +29,10 @@ var running = 0;
 var limit = 1;
 
 function launcher() {
+    console.log(items);
     while(running < limit && items.length > 0) {
         var item = items.shift();
+        console.log(item);
         scrapePage(item, function(result) {
             results.push(item);
             running--;
